@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="mt-10">
+    <form method="post" class="max-w-sm mx-auto border-1 border-sky-800 rounded-lg p-4 login-form"> 
+        {{ form.hidden_tag()}}
+        <div class="mb-5">
+            {{ form.email.label(class="block mb-2 text-sm font-medium text-black") }}
+            {{ form.email(class="bg-gray-100 border-1 border-sky-800 text-black text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5") }}
+            {% for error in form.email.errors %}
+                <span class="text-sm text-red-800">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-5">
+            {{ form.password.label(class="block mb-2 text-sm font-medium text-black") }}
+            {{ form.password(class="bg-gray-100 border-1 border-sky-800 text-black text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5") }}
+            {% for error in form.password.errors %}
+                <span class="text-sm text-red-800">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-5">
+            {{ form.submit(class="text-white login-btn bg-sky-800 hover:bg-sky-700 focus:ring-2 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center cursor-pointer") }}
+        </div>
+        <div>
+            <span class="text-black text-sm ">New user? <a href="{{ url_for('auth.register')}}" class="text-sky-800">Register here.</a></span>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}
