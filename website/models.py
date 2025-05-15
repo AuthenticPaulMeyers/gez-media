@@ -4,13 +4,15 @@ from website import db
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(150))
-    name = db.Column(db.String(150))
-    profile_picture = db.Column(db.String(150), default='default.jpg')
+    password = db.Column(db.String(150), nullable=False)
+    name = db.Column(db.String(150), nullable=False)
+    profile_picture = db.Column(db.String(150), default='default.jpg', nullable=False)
+    image_filename = db.Column(db.String(100))
+    image_mimetype = db.Column(db.String(50)) 
     posts = db.relationship('Post', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.id}', '{self.email}', '{self.name}', '{self.profile_picture}')"
+        return f"User('{self.id}', '{self.email}', '{self.name}', '{self.profile_picture}', '{self.image_filename}', '{self.image_mimetype}')"
     
 
 class Post(db.Model):

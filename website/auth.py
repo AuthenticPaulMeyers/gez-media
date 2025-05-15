@@ -1,16 +1,12 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint
+from flask import render_template, url_for, flash, redirect, request, Blueprint, send_file, request
 from flask_login import login_user, current_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from website import db
-from website.models import User, Post
+from website.models import User
 from website.forms import RegistrationForm, LoginForm, UpdateAccountForm
 from io import BytesIO
-import os
-import secrets
 from flask import current_app as app
-from PIL import Image
-
-
+from werkzeug.utils import secure_filename
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -19,13 +15,28 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('views.dashboard'))
     form = RegistrationForm()
-    if form.validate_on_submit():
+    user_email = User.query.filter_by(email=form.email.data).first()
+    
+    if user_email:
+        flash('Email already exist. Please try a different email', category='error')
+        return redirect(url_for('auth.register'))
+
+    if request.method == 'POST':
         hashed_password = generate_password_hash(form.password.data)
-        new_user = User(email=form.email.data, password=hashed_password, name=form.name.data)
-        db.session.add(new_user)
-        db.session.commit()
-        flash('Your account has been created!', category='success')
-        return redirect(url_for('auth.login'))
+        image = form.profile_picture.data
+        email = form.email.data
+        name = form.username.data
+        if image:
+            image_mimetype=image.mimetype
+            image_filename = secure_filename(image.filename)
+            image_data = image.read() # Read image in binary data
+
+            new_user = User(email=email, password=hashed_password, name=name, profile_picture=image_data, image_filename=image_filename, image_mimetype=image_mimetype)
+            db.session.add(new_user)
+            db.session.commit()
+            flash('Account created successfully!', category='success')
+            return redirect(url_for('auth.login'))
+        flash('Please upload a valid image file.', category='error')
     return render_template('register.html', form=form, title='Register')
 
 # login route
@@ -61,36 +72,32 @@ def update_account():
         current_user.email = form.email.data
         current_user.name = form.name.data
         if form.profile_picture.data:
-            picture_file = save_profile_picture(form.profile_picture.data)
-            current_user.profile_picture = picture_file
+            image = form.profile_picture.data
+            image_mimetype = image.mimetype
+            image_filename = secure_filename(image.filename)
+            image_data = image.read()
+            current_user.image_mimetype = image_mimetype
+            current_user.image_filename = image_filename
+            current_user.profile_picture = image_data
         db.session.commit()
         flash('Your account has been updated!', category='success')
         return redirect(url_for('views.account'))
     elif request.method == 'GET':
         form.email.data = current_user.email
         form.name.data = current_user.name
+        form.profile_picture.data = current_user.profile_picture
+
     return render_template('update_account.html', form=form, title='Update Account')
 
-# Function to save profile picture
-def save_profile_picture(form_picture):
-    random_hex = secrets.token_hex(8)
-    _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_fn)
+@auth.route('/profile_picture/<int:user_id>')
+def profile_picture(user_id):
+    user = User.query.filter_by(id=user_id).first()
 
-    output_size = (125, 125)
-    i = Image.open(form_picture)
-    i.thumbnail(output_size)
-    i.save(picture_path)
-
-    return picture_fn
-
-# Function to delete profile picture
-def delete_profile_picture(picture_file):
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_file)
-    if os.path.exists(picture_path):
-        os.remove(picture_path)
-    return True
+    if user and user.profile_picture:
+        mimetype = user.image_mimetype or 'image/png'
+        download_name = user.image_filename
+        return send_file(BytesIO(user.profile_picture), mimetype=mimetype, download_name=download_name)
+    return "Image not found!", 404
 
 # Function to delete user account
 @auth.route('/delete_account', methods=['POST'])

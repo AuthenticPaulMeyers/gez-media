@@ -2,12 +2,12 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from website import db
-from website.models import Post
+from website.models import Post, User
 from website.forms import PostForm
 
 
 # create a blueprint for the views routes
-views = Blueprint('views', __name__, url_prefix='/views')
+views = Blueprint('views', __name__, url_prefix='/gezmedia')
 
 # create a route for the home page
 @views.route('/')
@@ -19,7 +19,11 @@ def home():
 @views.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('dashboard.html', title='Dashboard', user=current_user)
+    posts = Post.query.filter_by(user_id=current_user.id).all()
+    total_posts = len(posts)
+    total_users = User.query.count()
+
+    return render_template('dashboard.html', title='Dashboard', user=current_user, posts=posts, total_posts=total_posts, total_users=total_users)
 
 # create a route for the about page
 @views.route('/about')

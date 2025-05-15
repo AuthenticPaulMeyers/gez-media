@@ -12,6 +12,8 @@
     <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
     <!-- Tailwind CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FOnt awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -29,8 +31,8 @@
                         <li class="error">{{ message }}</li>
                     {% elif category == 'success' %}
                         <li class="success">{{ message }}</li>
-                    {% elif category == 'info' %}
-                        <li class="info">{{ message }}</li>
+                    <!-- {% elif category == 'info' %}
+                        <li class="info">{{ message }}</li> -->
                     {% endif %}
                 {% endfor %}
             </ul>
@@ -43,9 +45,9 @@
      
     
     <!-- load the javascript files -->
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/another_script.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/another_script2.js') }}"></script>
+    <!-- <script src="{{ url_for('static', filename='js/script.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='js/another_script.js') }}"></script> -->
+    <!-- <script src="{{ url_for('static', filename='js/another_script2.js') }}"></script> -->
         <!-- Flowbite Js Link -->
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 </body>

@@ -6,16 +6,18 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_wtf.file import FileAllowed
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired(), Length(min=6)])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=150)])
-    profile_picture = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
+    email = StringField('Email', validators=[Email()], render_kw={"placeholder": "Enter your email"})
+    username = StringField('Username', validators=[Length(min=2, max=150)], render_kw={"placeholder": "Enter your username"})
+    password = PasswordField('Password', validators=[Length(min=6)], render_kw={"placeholder": "Enter your password"})
+    confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm your password"})
+    first_name = StringField('First Name', validators=[Length(min=2, max=150)], render_kw={"placeholder": "Enter your username name"})
+    name = StringField('Name', validators=[Length(min=2, max=150)])
+    profile_picture = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter your email"})
+    password = PasswordField('Password', validators=[DataRequired()], render_kw={"placeholder": "Enter your password"})
     submit = SubmitField('Login')
 
 class UpdateAccountForm(FlaskForm):
