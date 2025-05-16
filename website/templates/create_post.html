@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+
+{% block content %}
+<div class="dark:bg-gray-900 bg-gray-100 min-h-screen">    
+    <h1 class="text-center text-white text-3xl font-bold">Create a New Post</h1>
+    <form method="POST" class="max-w-lg mx-auto rounded-lg p-4" autocomplete="off" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="mb-2">
+            {{ form.title.label(class="block mb-2 text-sm font-medium text-gray-500") }}
+            {{ form.title(class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5") }}
+            {% for error in form.title.errors %}
+                <span class="text-red-600">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-2">
+            {{ form.image.label(class="block mb-2 text-sm font-medium text-gray-500") }}
+            {{ form.image(class="bg-gray-100 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5") }}
+            {% for error in form.image.errors %}
+                <span class="text-red-600">{{ error }}</span>
+            {% endfor %}
+        </div>
+
+        <div class="mb-2">
+            {{ form.category.label(class="block mb-2 text-sm font-medium text-gray-500") }}
+            {{ form.category(class="bg-gray-100 text-black text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5") }}
+            {% for error in form.category.errors %}
+                <span class="text-red-600">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-2">
+            {{ form.content.label(class="block mb-2 text-sm font-medium text-gray-500") }}
+            {{ form.content(class="bg-gray-100 text-gray-9  00 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 h-50") }}
+            {% for error in form.content.errors %}
+                <span class="text-red-600">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="mb-2">
+            {{ form.submit(class="text-white bg-sky-800 hover:bg-sky-700 focus:ring-2 focus:outline-none focus:ring-sky-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center cursor-pointer") }}
+            <button class="text-white mt-2 bg-red-600 hover:bg-red-700 focus:ring-2 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center cursor-pointer">
+                <a href="{{ url_for('views.dashboard') }}">Cancel</a>
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

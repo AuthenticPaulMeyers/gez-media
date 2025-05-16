@@ -1,6 +1,7 @@
 from flask_login import UserMixin
 from website import db
 
+
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(150), unique=True)
@@ -12,19 +13,22 @@ class User(db.Model, UserMixin):
     posts = db.relationship('Post', backref='author', lazy=True)
 
     def __repr__(self):
-        return f"User('{self.id}', '{self.email}', '{self.name}', '{self.profile_picture}', '{self.image_filename}', '{self.image_mimetype}')"
+        return f"User('{self.id}')"
     
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(150))
     content = db.Column(db.Text)
-    date_posted = db.Column(db.DateTime, nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    image_filename = db.Column(db.String(100))
+    image_mimetype = db.Column(db.String(50))
+    image_data = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
     def __repr__(self):
-        return f"Post('{self.id}', '{self.title}', '{self.date_posted}')"
+        return f"Post('{self.id}')"
 
 # category model
 class Category(db.Model):
@@ -32,4 +36,32 @@ class Category(db.Model):
     name = db.Column(db.String(150), unique=True)
     posts = db.relationship('Post', backref='category', lazy=True)
     def __repr__(self):
-        return f"Category('{self.id}', '{self.name}')"
+        return f"Category('{self.id}')"
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Comment('{self.id}')"
+
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f"Like('{self.id}')"
+    
+class View(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
+
+    def __repr__(self):
+        return f"View('{self.id}')"

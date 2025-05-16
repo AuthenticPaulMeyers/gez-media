@@ -1,7 +1,7 @@
 
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField  
+from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField , SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from flask_wtf.file import FileAllowed
 
@@ -28,8 +28,10 @@ class UpdateAccountForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired(), Length(min=1, max=150)])
-    content = TextAreaField('Content', validators=[DataRequired()])
+    title = StringField('Title', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter title"})
+    content = TextAreaField('Content', validators=[DataRequired()], render_kw={"placeholder": "Your content here"})
+    image = FileField('Upload cover photo', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    category = SelectField('Category', choices=[], validators=[DataRequired()])
     submit = SubmitField('Post')
 
 class CategoryForm(FlaskForm):
