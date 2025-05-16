@@ -161,10 +161,10 @@
             {% if latest_posts %}
             {% for post in latest_posts %}
             <div class="block p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <a href="" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</a>
+            <a href="{{ url_for('views.post', post_id=post.id)}}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</a>
               <div class="flex flex-row items-center mt-4">
-                <span class="text-sm text-gray-400 "> 0 <i class="fa-solid fa-thumbs-up"></i></span>
-              <span class="text-sm text-gray-400 px-2">0 <i class="fa-solid fa-eye"></i></span>
+                <span class="text-sm text-gray-400 "> {{ post.likes }} <i class="fa-solid fa-thumbs-up"></i></span>
+              <span class="text-sm text-gray-400 px-2"> {{ post.views }} <i class="fa-solid fa-eye"></i></span>
               </div>
               <div class="flex flex-row items-center mt-4">
                 <a href="{{ url_for('views.delete_post', post_id=post.id)}}"><span class="text-red-600"><i class="fa-solid fa-trash"></i></span></a>
@@ -193,10 +193,10 @@
             <div class="mt-4 mb-4">
               <div class="block p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700">
 
-              <a href="" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</a>
+              <a href="{{ url_for('views.post', post_id=post.id) }}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</a>
                 <div class="flex flex-row items-center mt-4">
-                  <span class="text-sm text-gray-400 "> 0 <i class="fa-solid fa-thumbs-up"></i></span>
-                  <span class="text-sm text-gray-400 px-2">0 <i class="fa-solid fa-eye"></i></span>
+                  <span class="text-sm text-gray-400 "> {{ post.likes }} <i class="fa-solid fa-thumbs-up"></i></span>
+                  <span class="text-sm text-gray-400 px-2">{{ post.views }}<i class="fa-solid fa-eye"></i></span>
                 </div>
                 <div class="flex flex-row items-center mt-4">
                   <a href="{{ url_for('views.delete_post', post_id=post.id)}}"><span class="text-red-600"><i class="fa-solid fa-trash"></i></span></a>

@@ -7,9 +7,8 @@ from website.forms import PostForm, CategoryForm
 from werkzeug.utils import secure_filename
 from io import BytesIO
 
-
 # create a blueprint for the views routes
-views = Blueprint('views', __name__, url_prefix='/gezmedia')
+views = Blueprint('views', __name__, url_prefix='/gezmedia-blog')
 
 # create a route for the home page
 @views.route('/')
@@ -43,8 +42,18 @@ def blog():
 # create a route for the post page
 @views.route('/post/<int:post_id>')
 def post(post_id):
-    post = Post.query.filter_by(id=post_id, user_id=current_user).first()
+    post = Post.query.filter_by(id=post_id, user_id=current_user.id).first()
+
+    # get the post and increment the views
+    if post:
+        post.views += 1
+        db.session.commit()
+    else:
+        flash('Post not found!', category='error')
+        return redirect(url_for('views.blog'))
+
     return render_template('post.html', title=post.title, post=post)
+
 
 # create a route for the create post page
 @views.route('/create_post', methods=['GET', 'POST'])
@@ -97,3 +106,14 @@ def delete_post(post_id):
     db.session.commit()
     flash('Your post has been deleted!', category='success')
     return redirect(url_for('views.dashboard'))
+
+# route to read images from the database
+@views.route('/image/<int:post_id>')
+def post_image(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    # Check if the post exists and has a profile picture
+    if post and post.image_data:
+        mimetype = post.image_mimetype or 'image/png'
+        download_name = post.image_filename
+        return send_file(BytesIO(post.image_data), mimetype=mimetype, download_name=download_name)
+    return "Image not found!", 404

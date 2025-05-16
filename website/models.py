@@ -14,7 +14,6 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.id}')"
-    
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,6 +24,8 @@ class Post(db.Model):
     image_mimetype = db.Column(db.String(50))
     image_data = db.Column(db.LargeBinary)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    views = db.Column(db.Integer, default=0)
+    likes = db.Column(db.Integer, default=0)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'), nullable=False)
 
     def __repr__(self):
@@ -37,31 +38,3 @@ class Category(db.Model):
     posts = db.relationship('Post', backref='category', lazy=True)
     def __repr__(self):
         return f"Category('{self.id}')"
-
-class Comment(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    content = db.Column(db.Text)
-    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Comment('{self.id}')"
-
-class Like(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-
-    def __repr__(self):
-        return f"Like('{self.id}')"
-    
-class View(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey('post.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=db.func.current_timestamp())
-
-    def __repr__(self):
-        return f"View('{self.id}')"

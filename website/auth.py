@@ -26,17 +26,16 @@ def register():
         image = form.profile_picture.data
         email = form.email.data
         name = form.username.data
-        if image:
-            image_mimetype=image.mimetype
-            image_filename = secure_filename(image.filename)
-            image_data = image.read() # Read image in binary data
+        
+        image_mimetype=image.mimetype
+        image_filename = secure_filename(image.filename)
+        image_data = image.read() # Read image in binary data
 
-            new_user = User(email=email, password=hashed_password, name=name, profile_picture=image_data, image_filename=image_filename, image_mimetype=image_mimetype)
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Account created successfully!', category='success')
-            return redirect(url_for('auth.login'))
-        flash('Please upload a valid image file.', category='error')
+        new_user = User(email=email, password=hashed_password, name=name, profile_picture=image_data, image_filename=image_filename, image_mimetype=image_mimetype)
+        db.session.add(new_user)
+        db.session.commit()
+        flash('Account created successfully!', category='success')
+        return redirect(url_for('auth.login'))
     return render_template('register.html', form=form, title='Register')
 
 # login route
