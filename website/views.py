@@ -102,15 +102,23 @@ def create_post():
 @views.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
 @login_required
 def edit_post(post_id):
-    post = Post.query.get_or_404(post_id)
+    post = Post.query.filter_by(id=post_id, user_id=current_user.id).first()
+    if not post:
+        flash('Post not found!', category='error')
+        return redirect(url_for('views.dashboard'))
+    
+
 
     form = PostForm(obj=post)
+    category = Category.query.all()
+    form.category.choices = [(c.id, c.name) for c in category]
+
     if form.validate_on_submit():
         post.title = form.title.data
         post.content = form.content.data
         db.session.commit()
         flash('Your post has been updated!', category='success')
-        return redirect(url_for('views.post', post_id=post.id))
+        return redirect(url_for('views.dashboard', post_id=post.id))
     return render_template('edit_post.html', title='Edit Post', form=form, post=post)
 
 # create a route for the delete post page
@@ -134,3 +142,19 @@ def post_image(post_id):
         download_name = post.image_filename
         return send_file(BytesIO(post.image_data), mimetype=mimetype, download_name=download_name)
     return "Image not found!", 404
+
+
+# category routes
+@views.route('/create_category', methods=['GET', 'POST'])
+@login_required
+def create_category():
+    form = CategoryForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        category = Category(name=name)
+        db.session.add(category)
+        db.session.commit()
+        flash('Your category has been created!', category='success')
+        return redirect(url_for('views.dashboard'))
+    return render_template('create_category.html', title='Create Category', form=form)
+

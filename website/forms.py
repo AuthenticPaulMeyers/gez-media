@@ -35,7 +35,7 @@ class PostForm(FlaskForm):
     submit = SubmitField('Post')
 
 class CategoryForm(FlaskForm):
-    name = StringField('Category Name', validators=[DataRequired(), Length(min=1, max=150)])
+    name = StringField('Category', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter category name"})
     submit = SubmitField('Create Category')
 
     

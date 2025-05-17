@@ -169,7 +169,7 @@
               </div>
               <div class="flex flex-row items-center mt-4">
                 <a href="{{ url_for('views.delete_post', post_id=post.id)}}"><span class="text-red-600"><i class="fa-solid fa-trash"></i></span></a>
-                <span class="mx-3 text-green-600"><i class="fa-solid fa-pen-to-square"></i></span>
+                <a href="{{ url_for('views.edit_post', post_id=post.id)}}"><span class="mx-3 text-green-600"><i class="fa-solid fa-pen-to-square"></i></span></a>
               </div>
             </div>
             {% endfor %}
@@ -201,7 +201,7 @@
                 </div>
                 <div class="flex flex-row items-center mt-4">
                   <a href="{{ url_for('views.delete_post', post_id=post.id)}}"><span class="text-red-600"><i class="fa-solid fa-trash"></i></span></a>
-                  <span class="mx-3 text-green-600"><i class="fa-solid fa-pen-to-square"></i></span>
+                  <a href="{{ url_for('views.edit_post', post_id=post.id)}}"><span class="mx-3 text-green-600"><i class="fa-solid fa-pen-to-square"></i></span></a>
                 </div>
               </div>
           </div>
