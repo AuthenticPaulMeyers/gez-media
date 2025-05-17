@@ -1,13 +1,39 @@
 {% extends 'base.html' %}
 {% block content %}
 <section class="bg-white dark:bg-gray-900">
-  <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-      <div class="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
-          <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white">Powering innovation at <span class="font-extrabold">200,000+</span> companies worldwide</h2>
-          <p class="mb-4 font-light">Track work across the enterprise through an open, collaborative platform. Link issues across Jira and ingest data from other software development tools, so your IT support and operations teams have richer contextual information to rapidly respond to requests, incidents, and changes.</p>
-          <p class="mb-4 font-medium">Deliver great service experiences fast - without the complexity of traditional ITSM solutions.Accelerate critical development work, eliminate toil, and deploy changes with ease.</p>
+  <div class="flex flex-col justify-center align-center items-center">
+      <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+        <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400">
+            <h2 class="text-center mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10">GEZMEDIA BLOG</h2>
+            <p class="mb-4 font-light">Here you will find the latest news and updates about our company, products, and services. We aim to provide valuable insights and information to help you stay informed and engaged.</p>
+        </div>
       </div>
-  </div>
+
+      <!-- Latest posts -->
+      <div class="py-8 px-4 lg:py-16 lg:px-6">
+          <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10">Latest Posts</h2>
+          {% for post in latest_posts %}
+          <div class="mb-4">
+              <a href="{{ url_for('views.post', post_id=post.id) }}">
+                  <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ post.title }}</h3>
+              </a>
+              <p class="text-gray-500 dark:text-gray-400">{{ post.content[:60] }}...</p>
+          </div>
+          {% endfor %}
+      </div>
+
+      <!-- popular posts -->
+      <div class="py-8 px-4 lg:py-16 lg:px-6">
+          <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10">Popular Posts</h2>
+          {% for popular_post in popular_posts %}
+          <div class="mb-4">
+              <a href="{{ url_for('views.post', post_id=popular_post.id) }}">
+                  <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ popular_post.title }}</h3>
+              </a>
+              <p class="text-gray-500 dark:text-gray-400">{{ popular_post.content[:60] }}...</p>
+          </div>
+          {% endfor %}
+      </div>
 </section>
 
 

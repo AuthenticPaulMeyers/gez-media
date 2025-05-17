@@ -1,4 +1,4 @@
-from flask import render_template, url_for, flash, redirect, request, Blueprint, send_file
+from flask import render_template, url_for, flash, redirect, request, Blueprint, send_file, session
 from flask_login import login_user, current_user, logout_user, login_required
 from werkzeug.security import generate_password_hash, check_password_hash
 from website import db
@@ -6,6 +6,7 @@ from website.models import Post, User, Category
 from website.forms import PostForm, CategoryForm
 from werkzeug.utils import secure_filename
 from io import BytesIO
+from sqlalchemy import func
 
 # create a blueprint for the views routes
 views = Blueprint('views', __name__, url_prefix='/gezmedia-blog')
@@ -21,12 +22,12 @@ def home():
 @login_required
 def dashboard():
     posts = Post.query.filter_by(user_id=current_user.id).all()
-    latest_posts = Post.query.filter_by(user_id=current_user.id).order_by(Post.date_posted.desc()).limit(5).all()
+    latest_posts = Post.query.filter_by(user_id=current_user.id).order_by(Post.date_posted.desc()).limit(3).all()
     total_posts = len(posts)
-    total_users = User.query.count()
     total_categories = Category.query.count()
+    total_views = db.session.query(func.sum(Post.views)).scalar()
 
-    return render_template('dashboard.html', title='Dashboard', user=current_user, posts=posts, total_posts=total_posts, total_users=total_users, latest_posts=latest_posts, total_categories=total_categories)
+    return render_template('dashboard.html', title='Dashboard', user=current_user, posts=posts, total_posts=total_posts, latest_posts=latest_posts, total_categories=total_categories, total_views=total_views)
 
 # create a route for the about page
 @views.route('/about')
@@ -37,22 +38,38 @@ def about():
 @views.route('/blog')
 def blog():
     posts = Post.query.all()
-    return render_template('blog.html', title='Blog', posts=posts)
+     # get latest posts
+    latest_posts = Post.query.order_by(Post.date_posted.desc()).limit(5).all()
+
+    # get categories
+    categories = Category.query.all()
+    # get the most viewd posts
+    popular_posts = Post.query.order_by(Post.views.desc()).limit(5).all()
+    return render_template('blog.html', title='Blog', posts=posts, latest_posts=latest_posts, categories=categories, popular_posts=popular_posts)
 
 # create a route for the post page
 @views.route('/post/<int:post_id>')
 def post(post_id):
     post = Post.query.filter_by(id=post_id, user_id=current_user.id).first()
 
+    # get similar posts
+    similar_posts = Post.query.filter(Post.category_id == post.category_id, Post.id != post.id).order_by(func.random()).limit(2).all() if post else []
+
     # get the post and increment the views
     if post:
-        post.views += 1
-        db.session.commit()
+        # Use session to track viewed posts
+        viewed = session.get('viewed_posts', [])
+
+        if post_id not in viewed:
+            post.views += 1
+            db.session.commit()
+            viewed.append(post_id)
+            session['viewed_posts'] = viewed
     else:
         flash('Post not found!', category='error')
         return redirect(url_for('views.blog'))
 
-    return render_template('post.html', title=post.title, post=post)
+    return render_template('post.html', title=post.title, post=post, similar_posts=similar_posts, user=current_user)
 
 
 # create a route for the create post page
