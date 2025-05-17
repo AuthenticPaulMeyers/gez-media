@@ -31,7 +31,7 @@
                         <span><i class="fa-solid fa-thumbs-up"></i> {{ post.likes }} </span>
                     </p>
                 </div>
-                <div class="flex-center flex justify-center align-center items-center mb-4">
+                <div class="flex-center flex justify-center align-center items-center">
                     <img src="{{ url_for('views.post_image', post_id=post.id) }}" alt="{{ post.image_filename }}"/>
                 </div>
                 <p class="mb-4 font-light">{{ post.content }}</p>
@@ -39,13 +39,20 @@
             <!-- load smilar posts -->
             <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400 mt-15">
                 {% if similar_posts %}
-                <h2 class="text-3xl tracking-tight font-bold text-gray-900 dark:text-gray-400 mb-3">Similar Posts</h2>
+                
+               
+                 <h2 class="text-3xl tracking-tight font-bold text-gray-900 dark:text-gray-400 mb-3">Similar Posts</h2>
                 {% for similar_post in similar_posts %}
-                <div class="mb-4">
+                <div class="rounded-lg dark:bg-gray-800 w-full grid grid-cols-1 gap-2 mb-4 md:grid-cols-2 lg:grid-cols-2">
                     <a href="{{ url_for('views.post', post_id=similar_post.id) }}">
-                        <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ similar_post.title }}</h3>
+                        <img src="{{ url_for('views.post_image', post_id=similar_post.id) }}" alt="{{ similar_post.image_filename }}" class="rounded-md w-full inline-block">
                     </a>
-                    <p class="text-gray-500 dark:text-gray-400">{{ similar_post.content[:60] }}...</p>
+                    <div class="p-4">
+                        <a href="{{ url_for('views.post', post_id=similar_post.id) }}">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ similar_post.title }}</h3>
+                        </a>
+                        <p class="text-gray-500 dark:text-gray-400">{{ similar_post.content[:60] }}...</p>
+                    </div>
                 </div>
                 {% endfor %}
                 {% endif %}

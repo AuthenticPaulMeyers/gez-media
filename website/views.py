@@ -71,7 +71,6 @@ def post(post_id):
 
     return render_template('post.html', title=post.title, post=post, similar_posts=similar_posts, user=current_user)
 
-
 # create a route for the create post page
 @views.route('/create_post', methods=['GET', 'POST'])
 @login_required
@@ -107,8 +106,6 @@ def edit_post(post_id):
         flash('Post not found!', category='error')
         return redirect(url_for('views.dashboard'))
     
-
-
     form = PostForm(obj=post)
     category = Category.query.all()
     form.category.choices = [(c.id, c.name) for c in category]
@@ -143,8 +140,7 @@ def post_image(post_id):
         return send_file(BytesIO(post.image_data), mimetype=mimetype, download_name=download_name)
     return "Image not found!", 404
 
-
-# category routes
+# category route
 @views.route('/create_category', methods=['GET', 'POST'])
 @login_required
 def create_category():
