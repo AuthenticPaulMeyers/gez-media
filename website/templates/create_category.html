@@ -1,7 +1,39 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="mt-20 mb-20 dark:bg-gray-900">
+    <!-- Include the nav bav -->
+     {% include 'nav.html' %}
+
+    <!-- Sidebar -->
+
+    <!-- Include aside panel -->
+     {% include 'aside.html' %}
+
+     <!-- create table to display categories -->
+        <div class="dark:bg-gray-900 bg-gray-100 min-h-screen sm:py-6 py-18 sm:mt-12">
+            <h1 class="text-center text-white text-3xl font-bold">Post Categories</h1>
+            <div class="overflow-x-auto relative sm:rounded-lg max-w-2xl sm:max-w-2xl mx-auto rounded-lg mt-4">
+                <table class="text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">Category Name</th>
+                            <th scope="col" class="px-6 py-3">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in categories %}
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td class="px-6 py-4">{{ category.name }}</td>
+                                <td class="px-6 py-4">
+                                    <a href="{{ url_for('views.delete_category', cat_id=category.id)}}"><span class="text-red-600"><i class="fa-solid fa-trash"></i></span></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+<div class="mt-10 mb-20 dark:bg-gray-900 px-6">
     <form method="post" class=" max-w-sm mx-auto border-1 border-sky-800 rounded-lg p-4" autocomplete="off" >
         {{ form.hidden_tag()}}
         <div class="mb-5">

@@ -29,13 +29,13 @@ class UpdateAccountForm(FlaskForm):
 
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter title"})
-    content = TextAreaField('Content', validators=[DataRequired()], render_kw={"placeholder": "Your content here"})
+    content = TextAreaField('Content', validators=[DataRequired()], render_kw={"placeholder": "Paste your content here"})
     image = FileField('Upload cover photo', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     category = SelectField('Category', choices=[], validators=[DataRequired()])
     submit = SubmitField('Post')
 
 class CategoryForm(FlaskForm):
-    name = StringField('Category', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter category name"})
+    name = StringField('New Category', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter category name"})
     submit = SubmitField('Create Category')
 
     

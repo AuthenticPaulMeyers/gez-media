@@ -9,13 +9,20 @@ from io import BytesIO
 from sqlalchemy import func
 
 # create a blueprint for the views routes
-views = Blueprint('views', __name__, url_prefix='/gezmedia-blog')
+views = Blueprint('views', __name__, url_prefix='/gezmediav1.0')
 
 # create a route for the home page
 @views.route('/')
 @views.route('/home')
 def home():
     return render_template('home.html', title='Home')
+
+# get all the posts
+@views.route('/posts')
+@login_required
+def posts():
+    posts = Post.query.filter_by(user_id=current_user.id).all()
+    return render_template('all_posts.html', title='Posts', posts=posts, user=current_user) 
 
 # create a route for the dashboard page
 @views.route('/dashboard')
@@ -25,7 +32,7 @@ def dashboard():
     latest_posts = Post.query.filter_by(user_id=current_user.id).order_by(Post.date_posted.desc()).limit(3).all()
     total_posts = len(posts)
     total_categories = Category.query.count()
-    total_views = db.session.query(func.sum(Post.views)).scalar()
+    total_views = db.session.query(func.sum(Post.views)).filter_by(user_id=current_user.id).scalar()
 
     return render_template('dashboard.html', title='Dashboard', user=current_user, posts=posts, total_posts=total_posts, latest_posts=latest_posts, total_categories=total_categories, total_views=total_views)
 
@@ -38,19 +45,17 @@ def about():
 @views.route('/blog')
 def blog():
     posts = Post.query.all()
-     # get latest posts
-    latest_posts = Post.query.order_by(Post.date_posted.desc()).limit(5).all()
 
     # get categories
     categories = Category.query.all()
     # get the most viewd posts
     popular_posts = Post.query.order_by(Post.views.desc()).limit(5).all()
-    return render_template('blog.html', title='Blog', posts=posts, latest_posts=latest_posts, categories=categories, popular_posts=popular_posts)
+    return render_template('blog.html', title='Blog', posts=posts, categories=categories, popular_posts=popular_posts)
 
 # create a route for the post page
 @views.route('/post/<int:post_id>')
 def post(post_id):
-    post = Post.query.filter_by(id=post_id, user_id=current_user.id).first()
+    post = Post.query.filter_by(id=post_id).first()
 
     # get similar posts
     similar_posts = Post.query.filter(Post.category_id == post.category_id, Post.id != post.id).order_by(func.random()).limit(2).all() if post else []
@@ -95,7 +100,7 @@ def create_post():
             db.session.commit()
             flash('Your post has been created!', category='success')
             return redirect(url_for('views.dashboard'))
-    return render_template('create_post.html', title='Create Post', form=form)
+    return render_template('create_post.html', title='Create Post', form=form, user=current_user)
 
 # create a route for the edit post page
 @views.route('/edit_post/<int:post_id>', methods=['GET', 'POST'])
@@ -116,7 +121,7 @@ def edit_post(post_id):
         db.session.commit()
         flash('Your post has been updated!', category='success')
         return redirect(url_for('views.dashboard', post_id=post.id))
-    return render_template('edit_post.html', title='Edit Post', form=form, post=post)
+    return render_template('edit_post.html', title='Edit Post', form=form, post=post, user=current_user)
 
 # create a route for the delete post page
 @views.route('/delete_post/<int:post_id>', methods=['POST', 'GET'])
@@ -151,6 +156,26 @@ def create_category():
         db.session.add(category)
         db.session.commit()
         flash('Your category has been created!', category='success')
-        return redirect(url_for('views.dashboard'))
-    return render_template('create_category.html', title='Create Category', form=form)
+        return redirect(url_for('views.create_category'))
+    # get all categories
+    categories = Category.query.all()
+    return render_template('create_category.html', title='Create Category', form=form, user=current_user, categories=categories)
 
+# delete category route
+@views.route('/delete_category/<int:cat_id>', methods=['POST', 'GET'])
+def delete_category(cat_id):
+    category = Category.query.filter_by(id=cat_id).first()
+    if not category:
+        flash('Category not found!', category='error')
+        return redirect(url_for('views.create_category'))
+    
+    # Check if the category is used in any posts
+    posts = Post.query.filter_by(category_id=cat_id).all()
+    if posts:
+        flash('Cannot delete category. It is used in one or more posts.', category='error')
+        return redirect(url_for('views.create_category'))
+
+    db.session.delete(category)
+    db.session.commit()
+    flash('Your category has been deleted!', category='success')
+    return redirect(url_for('views.create_category'))

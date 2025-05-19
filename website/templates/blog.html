@@ -1,40 +1,43 @@
 {% extends 'base.html' %}
 {% block content %}
-<section class="bg-white dark:bg-gray-900">
+
+<section class="bg-white dark:bg-gray-900 py-8 lg:py-16 px-4 sm:px-6 lg:px-8">
   <div class="flex flex-col justify-center align-center items-center">
-      <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400">
-            <h2 class="text-center mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10">GEZMEDIA BLOG</h2>
-            <p class="mb-4 font-light">Here you will find the latest news and updates about our company, products, and services. We aim to provide valuable insights and information to help you stay informed and engaged.</p>
+        <div class="mx-auto max-w-screen-xl">
+            <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400">
+                <h2 class="text-center mb-4 text-4xl tracking-tight font-bold dark:text-gray-400">GEZMEDIA BLOG</h2>
+                <p class="mb-2 font-light px-2">Here you will find the latest news and updates about our company, products, and services. We aim to provide valuable insights and information to help you stay informed and engaged.</p>
+            </div>
         </div>
-      </div>
+        <!-- all posts -->
 
-      <!-- Latest posts -->
-      <div class="py-8 px-4 lg:py-16 lg:px-6">
-          <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10">Latest Posts</h2>
-          {% for post in latest_posts %}
-          <div class="mb-4">
-              <a href="{{ url_for('views.post', post_id=post.id) }}">
-                  <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ post.title }}</h3>
-              </a>
-              <p class="text-gray-500 dark:text-gray-400">{{ post.content[:60] }}...</p>
-          </div>
-          {% endfor %}
-      </div>
+        <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400 mt-5 px-2 sm:px-6 lg:px-8">
+        {% if posts %}
+            <h2 class="text-3xl tracking-tight font-bold text-gray-900 dark:text-gray-400 mb-3">Our Posts</h2>
+        {% for post in posts %}
+        <div class="rounded-lg dark:bg-gray-800 w-full grid grid-cols-1 gap-2 mb-4 md:grid-cols-2 lg:grid-cols-2">
+            <a href="{{ url_for('views.post', post_id=post.id) }}">
+                <img src="{{ url_for('views.post_image', post_id=post.id) }}" alt="{{ post.image_filename }}" class="rounded-md w-full inline-block">
+            </a>
+            <div class="p-4">
+                <a href="{{ url_for('views.post', post_id=post.id) }}">
+                    <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ post.title }}</h3>
+                </a>
+                <p class="text-gray-500 dark:text-gray-400">{{ post.content[:60] }}...</p>
+            <p class="mt-16">
+                <span><i class="fa-solid fa-eye"></i>  {{ post.views }}</span>
+                <span><i class="fa-solid fa-thumbs-up"></i> {{ post.likes }} </span>
+            </p>
+            </div>
 
-      <!-- popular posts -->
-      <div class="py-8 px-4 lg:py-16 lg:px-6">
-          <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10">Popular Posts</h2>
-          {% for popular_post in popular_posts %}
-          <div class="mb-4">
-              <a href="{{ url_for('views.post', post_id=popular_post.id) }}">
-                  <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ popular_post.title }}</h3>
-              </a>
-              <p class="text-gray-500 dark:text-gray-400">{{ popular_post.content[:60] }}...</p>
-          </div>
-          {% endfor %}
-      </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="flex flex-row items-center justify-center">
+                <h4 class="text-sm font-medium text-red-500 text-center">No posts currently available</h4>
+            </div>
+        {% endif %}
+    </div>
 </section>
-
 
 {% endblock %}
