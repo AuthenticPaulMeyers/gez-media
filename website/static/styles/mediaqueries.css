@@ -1,0 +1,462 @@
+@media (max-width: 480px){
+    body{
+        overflow: hidden;
+    }
+    .header-section{
+        position: fixed;
+        height: 50px;
+        left: 0;
+        right: 0;
+
+    }
+    .nav{
+       
+        flex-direction: column;
+        position: absolute;
+        top: 55px;
+        right: -100%;
+        background: var(--white);
+        height: 100dvh;
+        width: 100%;
+        box-shadow: 1px 5px 5px rgba(0, 0, 0, 0.3);  
+    }
+    .btn{
+        padding: 8px 16px;
+        font-size: 1rem;
+      }
+
+      .phone-btn{
+        margin-right: -35px;
+        padding: 10px;
+        display: block;
+      }
+    .nav li{
+        margin-top: 1.5rem;
+    }
+    .nav li a{
+        font-size: 1.3rem;
+    }
+    .active{
+        right: 0;
+    }
+    .menu{
+        display: block;
+        width: 20px;
+        text-align: center;
+    }
+    .menu button{
+        font-size: 1.5rem;
+    }
+    
+    .btn-small{
+        margin-right: -25px;
+        display: none;
+    }
+    .hero-section{
+        display: flex;
+        align-items: center;
+        margin-top: 100px;
+        justify-content: center;
+        flex-wrap: wrap-reverse;
+        gap: 5px;
+        height: 85vh;
+        background-image: linear-gradient(180deg, rgba(255, 255, 255, 1.0), rgba(255, 255, 255, 0.7)), url("../images/hero.png");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+        line-height: 2.5rem;
+        margin-bottom: 80px;
+        height: 230px;
+     }
+    
+    .logo{
+        height: 35px;
+    }
+    .logo a img {
+        height: 100%;
+    }
+    .logo a span{
+        font-size: 1rem;
+    }
+    .about-section{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    .hero-section .right-section{
+        height: 50%;
+        display: none
+    }
+    .hero-section .left-section{
+        height: 80%;
+    }
+    .about-left-section .image-container{
+        width: 100%;
+    }
+    .finished-icon{
+        top: 10%;
+        left: -15%;
+        height: 170px;
+    }
+    .experience-icon{
+        bottom: 10%;
+        right:-18%;
+        height: 170px;
+    }
+    .about-right-section .about-title{
+        font-size: 1.5rem;
+        line-height: 1.1;
+    }
+    .about-right-section p{
+        margin-bottom: .1rem;
+        font-size: .8rem;
+        line-height: 1.2;
+    }
+    .about-right-section .review-container{
+        justify-content: flex-start;
+        margin: 1.3rem 0;
+        height: 60px;
+    }
+
+    .about-right-section .review-container img{
+        height: 65px;
+        margin-right: 15px;
+    }
+    .play-container{
+        left: 13%;
+        width: 250px;
+    }
+    .planning-container{
+       margin-top: .5rem;
+       margin-right: 0;
+       margin-left: 0;
+       margin-bottom: 1rem;
+
+    }
+    .contact{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 1rem;
+    }
+   
+    .blog-section .blog-container{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 1rem;
+    }
+    .blog-card{
+        height: 170px;
+        width: 350px;        
+    }
+    .blog-title{
+        padding: 10px;
+        width: 100%;
+        font-size: .9rem;
+
+    }
+    .card-container{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 10px;
+        align-content: center;
+        padding: 0 10px;
+    
+    }
+    .card{
+        width: 100%;
+        height: 200px;
+    }
+    .card-title{
+        font-size: 1.2rem;
+    }
+    .card img{
+        height: 85px;
+    }
+    
+    .description{
+        font-size: .9rem;
+        line-height: 1.2;
+    }
+
+    .contact-details-section,
+    .contact-form-section{
+        width: 100%;
+    }
+    .contact-description{
+        font-size: .9rem;
+        line-height: 1.1;
+    }
+    .contact-icons div{
+        font-size: .9rem;
+    }
+    .input-container{
+        height: 30px;
+    
+    }
+    .text-area{
+        height: 60px;    
+    
+    }
+    .input-container input,
+    .input-container textarea{
+        font-size: .9rem;
+
+    }
+    .text{
+        margin-top: 5px;
+        line-height: 1.3;
+        height: 35px;
+    }
+    .floating-btn{
+        display: none;
+    }
+    .floating-container{
+        display: none;
+    }
+    .service-section{
+        padding: 15px;
+    }
+    .input-container .send{
+        font-size: 12px;
+    
+    }
+    .contact-title{
+        font-size: 1.3rem;
+    }
+    .planning-section h1{
+        font-size: 1.7rem;
+    }
+    .play-button{
+        padding: 5px;
+        top: -18%; left: 40%;
+    }
+    
+    .play-button button{
+        height: 45px; width: 45px;
+    
+    }
+    
+    
+}
+
+
+/* |For desktop */
+@media (min-width: 1080px){
+    .header-section{
+        height: 38px;
+    }
+    
+    .btn{
+        padding: 8px 16px;
+        font-size: .9rem;
+      }
+   
+    .nav li a{
+        font-size: 1rem;
+        margin-right: 1.5rem;
+
+    }
+   
+    .menu button{
+        font-size: 1.5rem;
+    }
+    
+    .hero-title {
+        font-size: 4.3rem;
+        line-height: 4.2rem;
+        margin-bottom: 50px;
+        height: 450px;
+     }
+     .hero-section{
+        height: 100vh;
+        display: flex;
+        gap:85px;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 40px;
+    }
+    
+    .logo{
+        height: 35px;
+    }
+    .logo a img {
+        height: 100%;
+    }
+    .logo a span{
+        font-size: 1rem;
+    }
+    .about-section{
+        display: flex;
+        align-items: flex-start;
+        margin-top: 10px;
+        gap:85px;
+
+    }
+    .hero-section .left-section{
+        width: 100%;
+    }
+    .hero-section .right-section{
+        width: 100%;
+    }
+    .hero-section .right-section img{
+        width: 100%;
+    }
+    .about-left-section{
+        width: 40%;
+    }
+    .about-left-section .image-container{
+        width: 100%;
+    }
+    .finished-icon{
+        top: 10%;
+        left:-10%;
+        height: 270px;
+    }
+    .experience-icon{
+        bottom: 10%;
+        right:-10%;
+        height: 270px;
+    }
+    .about-right-section .about-title{
+        font-size: 2.5rem;
+        line-height: 1.1;
+    }
+    .about-right-section p{
+        margin-bottom: .1rem;
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+    .review-container{
+        margin: .5rem 0;
+        height: 200px;
+    }
+    .review-container img{
+        height: 370px;
+    }
+    .play-container{
+        bottom: -60%;
+        left: 35%;
+        height: 250px;
+        width: 250px;
+    }
+    .planning-container{
+       margin-top: .5rem;
+       margin-right: 0;
+       margin-left: 0;
+       margin-bottom: 1rem;
+       height: 250px;
+    }
+    .planning-section h1{
+        font-size: 1.6rem;
+    }
+    .contact{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        margin:2% 0;
+        background-color: var(--secondary-color);
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        justify-content: center;
+        height: auto;
+        color: var(--white);
+        gap: 10%;
+    
+    }
+
+    
+    .contact-details-section,
+    .contact-form-section{
+    width: 80%;
+}
+    .play-button{
+        padding: 5px;
+        top: -12%; left: 36%;
+    }
+    
+    .play-button button{
+        height: 55px; width: 55px;
+    
+    }
+   
+
+    .blog-section .blog-container{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 1rem;
+    }
+    .blog-card{
+        height: 170px;
+        width: 350px;        
+    }
+    .blog-title{
+        padding: 10px;
+        width: 100%;
+        font-size: .9rem;
+
+    }
+    .card{
+        width: 200px;
+        height: 200px;
+    }
+    .card-title{
+        font-size: 1rem;
+    }
+    
+    .description{
+        font-size: .8rem;
+        line-height: 1.1;
+    }
+    .card-container{
+        gap: 15px;
+        line-height: 1.1;
+    }
+    .contact-details-section,
+    .contact-form-section{
+        width: 100%;
+    }
+    .contact-description{
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+    .contact-icons div{
+        font-size: .7rem;
+    }
+    .input-container{
+        height: 30px;
+    
+    }
+    .text-area{
+        height: 55px;    
+    
+    }
+    .input-container input,
+    .input-container textarea{
+        font-size: 10px;
+
+    }
+    .text{
+        margin-top: 5px;
+        line-height: 1.3;
+        height: 35px;
+    }
+    .floating-btn{
+        display: none;
+    }
+    .floating-container{
+        display: none;
+    }
+    .service-section{
+        margin: 30px 0;
+        padding: 10px;
+    }
+}

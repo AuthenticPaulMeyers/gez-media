@@ -9,13 +9,15 @@ from io import BytesIO
 from sqlalchemy import func
 
 # create a blueprint for the views routes
-views = Blueprint('views', __name__, url_prefix='/blog-v1.0')
+views = Blueprint('views', __name__, url_prefix='/v1.0')
 
 # create a route for the home page
 @views.route('/')
-@views.route('/home')
-def home():
-    return render_template('home.html', title='Home')
+@views.route('/index')
+def index():
+    # get the latest posts
+    latest_articles = Post.query.order_by(Post.date_posted.desc()).limit(3).all()
+    return render_template('index.html', latest_articles=latest_articles)
 
 # get all the posts
 @views.route('/posts')
@@ -164,6 +166,7 @@ def create_category():
 # delete category route
 @views.route('/delete_category/<int:cat_id>', methods=['POST', 'GET'])
 def delete_category(cat_id):
+    # Check if the user is logged in
     category = Category.query.filter_by(id=cat_id).first()
     if not category:
         flash('Category not found!', category='error')
@@ -179,3 +182,8 @@ def delete_category(cat_id):
     db.session.commit()
     flash('Your category has been deleted!', category='success')
     return redirect(url_for('views.create_category'))
+
+# create a route for the reviews page
+@views.route('/reviews')
+def reviews():
+    return render_template('reviews.html', title='Reviews')

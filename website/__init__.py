@@ -13,7 +13,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='/static')
     app.config['SECRET_KEY'] = 'pSKjke898wJKjwrqtqtrCCSDFDwrtrTXXbsydsdghg'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///media.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

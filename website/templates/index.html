@@ -1,1 +1,223 @@
-this is the home page {{ user.name }}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to css-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/default.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/mediaqueries.css') }}">
+    <!-- Link to Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.png') }}">
+    <title>GEZMEDIA | Digital Consultancy</title>
+</head>
+<body>
+    
+<!-- Header Section starts-->
+<section class="header-section">
+
+        <!-- Logo -->
+        <div class="logo">
+            <a href="{{ url_for('views.index') }}" class="logo-link">
+                <img src="{{ url_for('static', filename='images/logo.png')}}" alt="Gezmedia" class="logo">
+                <span>GEZMEDIA</span>
+            </a>
+        </div>
+
+        <!-- Nav list -->
+        <nav class="nav-bar">
+            <ul class="nav">
+                <li><a href="#services" class="nav-list">Our Services</a></li>
+                <li><a href="{{ 'views.reviews' }}" class="nav-list">Pricing</a></li>
+                <li><a href="#blog" class="nav-list">Blog</a></li>
+                <li><a href="#about" class="nav-list">About Us</a></li>
+                <li><a href="{{ url_for('views.reviews')}}" class="nav-list">Reviews</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contact button -->
+        <button class="btn btn-small"><a href="#contact">Contact Us<i class="fa-solid fa-phone"></i></a></button>
+        <button class="btn phone-btn"><a href="#contact"><i class="fa-solid fa-phone"></i></a></button>
+
+        <!-- Hamgurber menu -->
+        <div class="menu">
+            <button class="hamburger-menu js-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+</section>
+<!-- Header section ends -->
+
+<!-- Hero section starts  -->
+    <section class="hero-section">
+        <div class="left-section">
+            <h1 class="hero-title"> <span class="sub-title">Transforming Your Business</span> Through Innovative Digital <span class="text"></span> </h1>
+                <a href="{{ url_for('views.reviews')}}" class="btn btn-get-started">Get Started <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="right-section">
+            <img src="{{ url_for('static', filename='images/hero-image.png')}}" alt="Hero Image" class="right-hero-image">
+        </div>
+    </section>
+
+<!-- Hero section ends  -->
+
+    <!-- About us section starts -->
+    <section class="about-section  " id="about">
+        <div class="about-left-section animate">
+            <h1 class="title"><em>ABOUT</em> US</h1>
+            <div class="image-container">
+                <img src="{{ url_for('static', filename='images/about-image.jpg') }}" alt="About image";> 
+            </div>
+
+            <img src="{{ url_for('static', filename='images/finished-projects.png')}}" alt="Finished projects" height="120px" class="finished-icon">
+            <img src="{{ url_for('static', filename='images/experience.png')}}" alt="Years of experience" height="120px" class="experience-icon">
+        </div>
+
+        <div class="about-right-section animate">
+            <h1 class="about-title">
+                Shaping the Future of <span class="about-bold">Digital Marketing</span>
+            </h1>
+
+            <p>With the ever-changing landscape of digital marketing, it is important to stay ahead of the curve and adapt to new trends.</p><br/>
+            <p>Our goal is to help your business thrive in the digital age to achieve its full potential.</p>
+
+            <div class="review-container animate">
+                <img src="{{ url_for('static', filename='images/reviews.png') }}" alt="Positive Reviews">
+                <img src="{{ url_for('static', filename='images/success-stories.png') }}" alt="Success Stories">
+            </div>
+
+            <a href="{{ url_for('views.reviews') }}" class="read-more-btn btn animate">Read More <i class="fa-solid fa-arrow-right"></i> </a>
+        </div>
+    </section>
+    <!-- About us section ends -->
+
+<!-- Planning section starts -->
+<!-- <section class="planning-section animate"> 
+    <h1 class="title"><em>Precision in Planning</em><br> and Punctuality in Delivery</h1>
+    <div class="planning-container">
+        <div class="play-container">
+            <div class="play-button">
+                <button><i class="fa-solid fa-play"></i></button>
+            </div>
+        </div>
+    </div>
+
+</section> -->
+<!-- Planning section ends -->
+
+<!-- Floating button -->
+<div class="floating-container">
+    <button class="floating-btn"><i class="fa-solid fa-arrow-up"></i></button>
+</div>
+
+<!-- Services section starts -->
+    <section class="service-section " id="services">
+        <h1 class="title" style="margin-left: 15px;"><em>OUR</em> SERVICES</h1>
+        <h2 class="we-do" style=" color: var(--light-blue); font-weight: 600; font-size: .9rem; margin-left: 15px; margin-top: 5px;">What We Do</h2>
+        
+        <div class="card-container animate">
+            <div class="card animate">
+                <img src="{{ url_for('static', filename='images/content.png')}}" alt="" height="60px">
+                <h1 class="card-title">Content Creation</h1>
+                <p class="description">Empowering brands with tailored content strategies and creative solutions, we transform ideas into impactful narratives that drive engagement and growth. </p>
+            </div>
+            <div class="card animate">
+                <img src="{{ url_for('static', filename='images/email.png')}}" alt="" height="60px">
+                <h1 class="card-title">Email Marketing</h1>
+                <p class="description">Specializing in strategic email marketing solutions, we help businesses craft compelling campaigns that boost engagement, drive conversions, and maximize return on investment.</p>
+            </div>
+            <div class="card animate">
+                <img src="{{ url_for('static', filename='images/branding.png')}}" alt="" height="60px">
+                <h1 class="card-title">Business Branding</h1>
+                <p class="description">Transforming visions into powerful identities, we provide expert business branding consultancy to elevate your brand's presence and drive market success.</p>
+            </div>
+            <div class="card animate">
+                <img src="{{ url_for('static', filename='images/seo.png')}}" alt="" height="60px">
+                <h1 class="card-title">Search Engine Optimization</h1>
+                <p class="description">Transforming visions into powerful identities, we provide expert business branding consultancy to elevate your brand's presence and drive market success.</p>
+            </div>
+            <div class="card animate">
+                <img src="{{ url_for('static', filename='images/social-media.png')}}" alt="" height="60px">
+                <h1 class="card-title">Social Media Management</h1>
+                <p class="description">Mastering social media dynamics, we provide strategic management consultancy to elevate your brand's presence, engage audiences, and drive impactful results.</p>
+            </div>
+        </div>
+    </section>
+<!-- Services section ends -->
+
+<!-- Blog section starts -->
+    <section class="blog-section" id="blog">
+        <h1 class="title"><em>OUR</em> BLOG</h1>
+        <h2 style="color: var(--light-blue); font-weight: 600; font-size: .9rem; margin-top: 5px;" class="we-do" >Latest Articles</h2>
+        <!-- load latest blog articles -->
+        <div class="blog-container">
+            {% if latest_articles %}
+                {% for article in latest_articles %}
+                    <div class="blog-card animate">
+                        <div class="image-container">
+                            <span>New</span>
+                            <img src="{{ url_for('views.post_image', post_id=article.id) }}" alt="{{ article.image_filename}}" class="background-image">
+                            <div class="blog-title">
+                                <a href="{{ url_for('views.post', post_id=article.id) }}" style="font-size: .9rem;">{{ article.title }}</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+        
+    </section>
+<!-- Blog section ends -->
+
+<!-- Contact section starts-->
+<section class="contact" id="contact">
+    <div class="contact-details-section animate">
+        <h1 class="contact-title">Get in touch with us</h1>
+        <p class="contact-description">Whether you have questions, need a consultation, or you are ready to elevate your brand, we are here to help. Contact us today and let's transform your business together.</p>
+
+        <div class="contact-icons">
+            <div><i class="fa-solid fa-phone"></i>+265 996 817 442</div>
+            <div><i class="fa-solid fa-envelope"></i>gezmedia5@gmail.com</div>
+            <div><i class="fa-brands fa-facebook"></i>GEZMEDIA</div>
+        </div>
+    </div>
+    <div class="contact-form-section animate">
+        <form action="https://formspree.io/f/xldrzvzz" method="POST" >
+            <div class="input-container">
+                <input type="text" class="name" id="name" placeholder="Your name" name="Name" required/>
+            </div>
+            <div class="input-container">
+                <input type="email" class="email" id="email" name="Email" placeholder="Your email" required/>
+            </div>
+            <div class="input-container">
+                <input type="text" class="subject" id="subject" name="Subject" placeholder="Subject" required/>
+            </div>
+            <div class="input-container text-area">
+                <textarea name="Message" id="message" cols="auto" rows="auto" placeholder="Your message"></textarea>
+            </div>
+            <div class="input-container button">
+                <button class="send" type="submit">Send<i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+            
+        </form>
+    </div>
+</section>
+<!-- Contact section ends-->
+
+    <!-- Footer section starts -->
+    <footer class="footer-section we-do">
+        <h1>© Gezmedia 2025</h1>
+        <p>All rights reserved</p>
+    </footer>
+    <!-- Footer section ends -->
+
+    <!-- External JS Files -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/nav.js') }}"></script>
+    <!-- Link to custom scroll animation -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+</body>
+</html>

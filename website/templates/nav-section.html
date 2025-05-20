@@ -1,0 +1,35 @@
+
+
+<section class="header-section">
+
+        <!-- Logo -->
+        <div class="logo">
+            <a href="{{ url_for('views.index') }}" class="logo-link">
+                <img src="{{ url_for('static', filename='images/logo.png')}}" alt="Gezmedia" class="logo">
+                <span>GEZMEDIA</span>
+            </a>
+        </div>
+
+        <!-- Nav list -->
+        <nav class="nav-bar">
+            <ul class="nav">
+                <li><a href="#services" class="nav-list">Our Services</a></li>
+                <li><a href="{{ 'views.reviews' }}" class="nav-list">Pricing</a></li>
+                <li><a href="#blog" class="nav-list">Blog</a></li>
+                <li><a href="#about" class="nav-list">About Us</a></li>
+                <li><a href="{{ url_for('views.reviews')}}" class="nav-list">Reviews</a></li>
+            </ul>
+        </nav>
+
+        <!-- Contact button -->
+        <button class="btn btn-small"><a href="#contact">Contact Us<i class="fa-solid fa-phone"></i></a></button>
+        <button class="btn phone-btn"><a href="#contact"><i class="fa-solid fa-phone"></i></a></button>
+
+        <!-- Hamgurber menu -->
+        <div class="menu">
+            <button class="hamburger-menu js-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+</section>
