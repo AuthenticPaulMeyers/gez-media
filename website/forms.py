@@ -10,8 +10,6 @@ class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[Length(min=2, max=150)], render_kw={"placeholder": "Enter your username"})
     password = PasswordField('Password', validators=[Length(min=6)], render_kw={"placeholder": "Enter your password"})
     confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm your password"})
-    first_name = StringField('First Name', validators=[Length(min=2, max=150)], render_kw={"placeholder": "Enter your username name"})
-    name = StringField('Name', validators=[Length(min=2, max=150)])
     profile_picture = FileField('Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
     submit = SubmitField('Sign Up')
 
@@ -21,10 +19,12 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class UpdateAccountForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=150)])
-    profile_picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png'])])
-    submit = SubmitField('Update')
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter your email"})
+    username = StringField('Username', validators=[DataRequired(), Length(min=2, max=150)], render_kw={"placeholder": "Enter your username"})
+    profile_picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
+    password = PasswordField('Password', validators=[Length(min=6)], render_kw={"placeholder": "Update password"})
+    confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm password"})
+    submit = SubmitField('Save changes')
 
 
 class PostForm(FlaskForm):

@@ -9,7 +9,7 @@ from io import BytesIO
 from sqlalchemy import func
 
 # create a blueprint for the views routes
-views = Blueprint('views', __name__, url_prefix='/gezmediav1.0')
+views = Blueprint('views', __name__, url_prefix='/blog-v1.0')
 
 # create a route for the home page
 @views.route('/')

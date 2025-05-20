@@ -7,7 +7,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(150), unique=True)
     password = db.Column(db.String(150), nullable=False)
     name = db.Column(db.String(150), nullable=False)
-    profile_picture = db.Column(db.String(150), default='default.jpg', nullable=False)
+    profile_picture = db.Column(db.String(150), default='default.jpg')
     image_filename = db.Column(db.String(100))
     image_mimetype = db.Column(db.String(50)) 
     posts = db.relationship('Post', backref='author', lazy=True)

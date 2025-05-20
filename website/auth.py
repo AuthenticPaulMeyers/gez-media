@@ -46,6 +46,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
+        
         if user and check_password_hash(user.password, form.password.data):
             login_user(user)
             flash('Login successful!', category='success')
@@ -63,30 +64,46 @@ def logout():
     return redirect(url_for('auth.login'))
 
 # update account route
-@auth.route('/update_account', methods=['GET', 'POST'])
+@auth.route('/profile/<int:user_id>', methods=['GET', 'POST'])
 @login_required
-def update_account():
+def update_account(user_id):
+    user = User.query.filter_by(id=user_id).first()
+    if not user:    
+        flash('User not found.', category='error')
+        return redirect(url_for('views.dashboard'))
+    # Check if the user trying to update is the current user
+    # This is important to prevent unauthorized access
+    if user.id != current_user.id:  
+        flash('You cannot edit this account.', category='error')
+        return redirect(url_for('views.dashboard'))
+    
     form = UpdateAccountForm()
+
     if form.validate_on_submit():
-        current_user.email = form.email.data
-        current_user.name = form.name.data
+        user.email = form.email.data
+        user.name = form.username.data
+        user.password = generate_password_hash(form.password.data)
+
         if form.profile_picture.data:
             image = form.profile_picture.data
             image_mimetype = image.mimetype
             image_filename = secure_filename(image.filename)
             image_data = image.read()
-            current_user.image_mimetype = image_mimetype
-            current_user.image_filename = image_filename
-            current_user.profile_picture = image_data
-        db.session.commit()
-        flash('Your account has been updated!', category='success')
-        return redirect(url_for('views.account'))
-    elif request.method == 'GET':
-        form.email.data = current_user.email
-        form.name.data = current_user.name
-        form.profile_picture.data = current_user.profile_picture
+            user.image_mimetype = image_mimetype
+            user.image_filename = image_filename
+            user.profile_picture = image_data
 
-    return render_template('update_account.html', form=form, title='Update Account')
+            db.session.commit()
+            flash('Your account has been updated!', category='success')
+            return redirect(url_for('auth.update_account', user_id=current_user.id))
+    else:
+        # Pre-fill the form with the current user's data
+        form.email.data = current_user.email
+        form.username.data = current_user.name
+        form.password.data = current_user.password
+        form.confirm_password.data = current_user.password
+
+    return render_template('update_account.html', form=form, title='Update Account', user=current_user)
 
 @auth.route('/profile_picture/<int:user_id>')
 def profile_picture(user_id):
