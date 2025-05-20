@@ -89,7 +89,7 @@
                 <img src="{{ url_for('static', filename='images/success-stories.png') }}" alt="Success Stories">
             </div>
 
-            <a href="{{ url_for('views.reviews') }}" class="read-more-btn btn animate">Read More <i class="fa-solid fa-arrow-right"></i> </a>
+            <a href="#blog" class="read-more-btn btn animate">Read More <i class="fa-solid fa-arrow-right"></i> </a>
         </div>
     </section>
     <!-- About us section ends -->
@@ -137,7 +137,9 @@
             <div class="card animate">
                 <img src="{{ url_for('static', filename='images/seo.png')}}" alt="" height="60px">
                 <h1 class="card-title">Search Engine Optimization</h1>
-                <p class="description">Transforming visions into powerful identities, we provide expert business branding consultancy to elevate your brand's presence and drive market success.</p>
+                <p class="description">
+                    Elevating online visibility through expert SEO strategies, we optimize your digital presence to drive organic traffic, enhance search rankings, and maximize conversions.
+                </p>
             </div>
             <div class="card animate">
                 <img src="{{ url_for('static', filename='images/social-media.png')}}" alt="" height="60px">
@@ -160,8 +162,8 @@
                         <div class="image-container">
                             <span>New</span>
                             <img src="{{ url_for('views.post_image', post_id=article.id) }}" alt="{{ article.image_filename}}" class="background-image">
-                            <div class="blog-title">
-                                <a href="{{ url_for('views.post', post_id=article.id) }}" style="font-size: .9rem;">{{ article.title }}</a>
+                            <div class="blog-title" >
+                                <a href="{{ url_for('views.post', post_id=article.id) }}" style="font-size: .9rem; padding: 10px">{{ article.title }}</a>
                             </div>
                         </div>
                     </div>
