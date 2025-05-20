@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-<section class="bg-white dark:bg-gray-900">
-    <button class="text-2xl font-medium text-gray-500 ml-4 mt-4 font-medium"><a href="{{ url_for('views.blog') }}"><i class="fa-solid fa-arrow-left"></i></a></button>
+<section class="bg-gray-100">
+    <button class="text-2xl font-medium text-gray-900 ml-8 mt-4 font-medium"><a href="{{ url_for('views.blog') }}"><i class="fa-solid fa-arrow-left"></i></a></button>
     <div class="flex flex-col justify-center align-center items-center">
         <div class="py-8 mx-auto max-w-screen-xl lg:py-16 px-4 sm:px-6 lg:px-8">
             <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400 ">
-                <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900 dark:text-white mb-10 px-2 sm:px-6 lg:px-8">
+                <h2 class="mb-4 text-4xl tracking-tight font-bold text-gray-900  mb-7 px-2 sm:px-6 lg:px-8">
                     
                     {{ post.title }}
                 </h2>
                     
-                <div class="flex flex-row items-center align-center px-2 sm:px-6 lg:px-8">
+                <div class="flex flex-row items-center align-center px-2 sm:px-6 lg:px-8 text-gray-700 ">
                     <span><i class="fa-solid fa-tag"></i></span>
                     <span class="mx-3">{{ post.category.name }}</span> 
 
@@ -19,18 +19,18 @@
                 <div class="mb-10 px-2 sm:px-6 lg:px-8">
                     <!-- get the name and image of the user from the post -->
                     <div class="flex align-center mt-8 flex-row ">
-                        {% if user.image_data %}
-                            <img src="{{ url_for('auth.profile_picture', user_id=user.id)}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block mr-2">
+                        {% if user.image_filename %}
+                            <img src="{{ url_for('auth.profile_picture', user_id=user.id)}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block">
                         {% else %}
-                            <img src="{{ url_for('static', filename='images/user.png')}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block mr-2">
+                            <img src="{{ url_for('static', filename='images/user.png')}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block">
                         {% endif %}
                             <div>
-                                <span class="text-gray-600 dark:text-white font-mediumn mx-3">{{ post.author.name }}</span> | <span class="mx-3" >{{ post.date_posted.strftime('%d-%m-%Y') }}</span> 
+                                <span class="text-gray-400 font-mediumn mx-2">{{ post.author.name }}</span> | <span class="mx-3 text-gray-400" >{{ post.date_posted.strftime('%d-%m-%Y') }}</span> 
                             </div>
                     </div>
 
                     
-                    <p class="mt-4">
+                    <p class="mt-4 text-gray-700">
                         <span><i class="fa-solid fa-eye"></i>  {{ post.views }}</span>
                         <span><i class="fa-solid fa-thumbs-up"></i> {{ post.likes }} </span>
                     </p>
@@ -45,8 +45,8 @@
 
                 <div class="mx-auto max-w-screen-xl px-2 sm:px-6 lg:px-8">
                     <div class="flex flex-col items-center">
-                        <div class="max-w-screen-md text-gray-700 sm:text-lg dark:text-gray-400">
-                            <pre class="mb-4 font-light whitespace-pre-wrap break-words">{{ post.content }}</pre>
+                        <div class="max-w-screen-md text-gray-900 sm:text-lg ">
+                            <pre class="mb-4 font-medium whitespace-pre-wrap break-words">{{ post.content }}</pre>
                         </div>
                     </div>
                 </div>
@@ -54,20 +54,20 @@
                 
             </div>
             <!-- load smilar posts -->
-            <div class="max-w-screen-md text-gray-500 sm:text-lg dark:text-gray-400 mt-15 px-2 sm:px-6 lg:px-8">
+            <div class="max-w-screen-md sm:text-lg mt-15 px-2 sm:px-6 lg:px-8">
                 {% if similar_posts %}
-                 <h2 class="text-3xl tracking-tight font-bold text-gray-900 dark:text-gray-400 mb-3">Similar Posts</h2>
+                 <h2 class="text-3xl tracking-tight font-bold text-gray-900 mb-3">Similar Posts</h2>
                 {% for similar_post in similar_posts %}
-                <div class="rounded-lg dark:bg-gray-800 w-full grid grid-cols-1 gap-2 mb-4 md:grid-cols-2 lg:grid-cols-2">
+                <div class="rounded-lg bg-gray-200 w-full grid grid-cols-1 gap-2 mb-4 md:grid-cols-2 lg:grid-cols-2">
                     <a href="{{ url_for('views.post', post_id=similar_post.id) }}">
                         <img src="{{ url_for('views.post_image', post_id=similar_post.id) }}" alt="{{ similar_post.image_filename }}" class="rounded-md w-full inline-block">
                     </a>
                     <div class="p-4">
                         <a href="{{ url_for('views.post', post_id=similar_post.id) }}">
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">{{ similar_post.title }}</h3>
+                            <h3 class="text-xl font-bold text-gray-900 ">{{ similar_post.title }}</h3>
                         </a>
-                        <p class="text-gray-500 dark:text-gray-400">{{ similar_post.content[:60] }}...</p>
-                    <p class="mt-16">
+                        <p class="text-gray-500 mb-4">{{ similar_post.content[:60] }}...</p>
+                    <p class="text-gray-500">
                         <span><i class="fa-solid fa-eye"></i>  {{ similar_post.views }}</span>
                         <span><i class="fa-solid fa-thumbs-up"></i> {{ similar_post.likes }} </span>
                     </p>

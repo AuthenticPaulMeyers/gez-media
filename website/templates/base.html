@@ -25,12 +25,32 @@
     <!-- load flashed messages and their category -->
     {% with messages = get_flashed_messages(with_categories=True) %}
         {% if messages %}
-            <ul class="flashes">
+            <ul class="fixed top-0 right-0 left-0 z-550 m-4 flex flex-center align-center justify-center">
                 {% for category, message in messages %}
                     {% if category == 'error' %}
-                        <li class="error">{{ message }}</li>
+                        <li class="error">
+                            <div id="alert-2" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <div class="ms-3 text-sm font-medium">
+                                {{ message }}
+                            </div>
+                            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            </div>
+                        </li>
                     {% elif category == 'success' %}
-                        <li class="success">{{ message }}</li>
+                        <li class="success">
+                            <div id="alert-3" class="flex items-center p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <div class="ms-3 text-sm font-medium">
+                                    {{ message }}
+                                </div>
+                                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                        </li>
                     {% endif %}
                 {% endfor %}
             </ul>

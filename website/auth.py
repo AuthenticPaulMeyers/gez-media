@@ -3,7 +3,7 @@ from flask_login import login_user, current_user, logout_user, login_required, c
 from werkzeug.security import generate_password_hash, check_password_hash
 from website import db
 from website.models import User
-from website.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from website.forms import RegistrationForm, LoginForm, UpdateAccountForm, PasswordResetForm
 from io import BytesIO
 from flask import current_app as app
 from werkzeug.utils import secure_filename
@@ -130,3 +130,22 @@ def delete_account():
         flash('Account deletion failed.', category='error')
     return redirect(url_for('views.account'))
 
+# forgot password route
+@auth.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    if current_user.is_authenticated:
+        return redirect(url_for('views.dashboard'))
+    form = PasswordResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            # update user table set password = new_password where email = form.email.data
+            new_password = generate_password_hash(form.password.data)
+            user.password = new_password
+            db.session.commit()
+
+            flash('Password reset successful.', category='success')
+            return redirect(url_for('auth.login'))
+        else:
+            flash('Email not found.', category='error')
+    return render_template('reset_password.html', form=form, title='Forgot Password')

@@ -22,8 +22,8 @@ class UpdateAccountForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter your email"})
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=150)], render_kw={"placeholder": "Enter your username"})
     profile_picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'])])
-    password = PasswordField('Password', validators=[Length(min=6)], render_kw={"placeholder": "Update password"})
-    confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm password"})
+    password = PasswordField('Update Password', validators=[Length(min=6)], render_kw={"placeholder": "Update password"})
+    confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm updated password"})
     submit = SubmitField('Save changes')
 
 
@@ -38,4 +38,9 @@ class CategoryForm(FlaskForm):
     name = StringField('New Category', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter category name"})
     submit = SubmitField('Create Category')
 
-    
+
+class PasswordResetForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter your email"})
+    password = PasswordField('New Password', validators=[DataRequired(), Length(min=6)], render_kw={"placeholder": "Enter new password"})
+    confirm_password = PasswordField('Confirm New Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm new password"})
+    submit = SubmitField('Reset Password')
