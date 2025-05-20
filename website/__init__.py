@@ -23,6 +23,7 @@ def create_app():
     # create and configure the app
     app.config['SECRET_KEY'] = 'yugdugvucdiurhuheirhiuhiuhe37843gjbjhsdfBHHShVDHsD'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///media.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     # Initialize the database
     db.init_app(app)
