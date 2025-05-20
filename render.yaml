@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: flask-web-app
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn app:myapp
+    envVars:
+      - key: FLASK_ENV
+        value: production

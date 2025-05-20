@@ -1,11 +1,8 @@
-from website import create_app, db
+from website import create_app
 
 myapp=create_app()
 
 
 if __name__ == '__main__':
-        # create the database
-    with myapp.app_context():
-        db.create_all()
-
+    # Run the Flask application
     myapp.run(debug=True)
