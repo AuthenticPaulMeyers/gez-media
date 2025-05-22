@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo.png') }}">
+    <!-- tailwind cdn -->
+    
     <title>GEZMEDIA | Digital Consultancy</title>
 </head>
 <body>
@@ -170,6 +172,10 @@
                 {% endfor %}
             {% endif %}
         </div>
+        <div class="load-more-blogs">
+            <a href="{{ url_for('views.blog') }}" style="text-decoration: underline; color: black;">Read More <i class="fa-solid fa-arrow-right"></i> </a>
+        </div>
+
         
     </section>
 <!-- Blog section ends -->

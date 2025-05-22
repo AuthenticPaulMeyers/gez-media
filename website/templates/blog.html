@@ -2,33 +2,44 @@
 {% block content %}
 
 
-<section class="bg-gray-100 py-8 lg:py-16 px-4 sm:px-6 lg:px-8 w-full">
-  <div class="flex flex-col justify-center align-center items-center">
-        <div class="mx-auto max-w-screen-xl">
-            <div class="max-w-screen-md text-gray-800 sm:text-lg">
-                <h2 class="text-center mb-4 text-4xl tracking-tight font-bold text-gray-900">GEZMEDIA BLOG</h2>
-                <p class="mb-2 font-medium px-2">Here you will find the latest news and updates about our company, products, and services. We aim to provide valuable insights and information to help you stay informed and engaged.</p>
+<section class="bg-gray-100 py-8 lg:py-16 px-4 sm:px-6 lg:px-8 w-full h-full">
+    <div class="flex flex-col justify-center align-center items-center w-full">
+        <div class="mx-auto max-w-screen-xl mb-20">
+            <div class="max-w-screen-md text-gray-800 sm:text-lg text-center flex flex-col items-center">
+                <h2 class="w-30 text-center p-2 rounded-full align bg-sky-500 text-center mb-4 text-large font-bold text-sky-900">Our blog</h2>
+                <p class="mb-2 font-medium px-2">Latest news and updates about our company, products, and services. We aim to provide valuable insights and information to help you stay informed and engaged.</p>
             </div>
         </div>
         <!-- all posts -->
 
-        <div class="max-w-screen-md text-gray-900 sm:text-lg  mt-5 px-2 sm:px-6 lg:px-8">
+        <div class="text-gray-900 mt-5 px-2 sm:px-6 lg:px-8 grid grid-cols-1 gap-4 mb-4 md:grid-cols-2 lg:grid-cols-4 w-full">
         {% if posts %}
-            <h2 class="text-3xl tracking-tight font-bold text-gray-900 mb-3">Our Posts</h2>
         {% for post in posts %}
-        <div class="rounded-lg bg-gray-200 w-full grid grid-cols-1 gap-2 mb-4 md:grid-cols-2 lg:grid-cols-2">
+        <div class="rounded-lg bg-gray-300 w-full grid grid-cols-1 gap-2 mb-4 h-100 md:h-100 lg:h-106 p-2">
             <a href="{{ url_for('views.post', post_id=post.id) }}">
-                <img src="{{ url_for('views.post_image', post_id=post.id) }}" alt="{{ post.image_filename }}" class="rounded-md w-full inline-block">
+                <img src="{{ url_for('views.post_image', post_id=post.id) }}" alt="{{ post.image_filename }}" class="rounded-md w-full inline-block overflow-hidden h-45 md:h-50 lg:h-50 object-cover">
             </a>
-            <div class="p-4">
+            <h3 class="text-medium font-normal text-sky-800 ">{{ post.category.name }}</h3>
+
+            <div class="">
                 <a href="{{ url_for('views.post', post_id=post.id) }}">
-                    <h3 class="text-xl font-bold text-gray-900">{{ post.title }}</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-3" style="line-height: 1;">{{ post.title }}</h3>
                 </a>
-                <p class="text-gray-500 mb-3">{{ post.content[:60] }}...</p>
-            <p class="text-gray-500">
-                <span><i class="fa-solid fa-eye"></i>  {{ post.views }}</span>
-                <span><i class="fa-solid fa-thumbs-up"></i> {{ post.likes }} </span>
-            </p>
+                <p class="text-gray-500 mb-3">{{ post.content[:40] }}...</p>
+            <div class="mt-6 flex flex-row items-center align-center">
+            <!-- get the name and image of the user from the post -->
+                <div>
+                    {% if post.author.image_filename %}
+                        <img src="{{ url_for('auth.profile_picture', user_id=post.author.id)}}" alt="{{ post.author.image_filename }}" class="rounded-full w-8 h-8">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='images/user.png')}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block">
+                    {% endif %}
+                </div>
+                <div class="flex align-center flex-col">
+                    <span class="text-gray-500 font-medium mx-2">{{ post.author.name }}</span>
+                    <span class="mx-2 text-gray-400 text-sm -mt-1" >{{ post.date_posted.strftime('%d-%m-%Y') }}</span>
+                </div>
+            </div>
             </div>
 
         </div>
@@ -39,6 +50,15 @@
             </div>
         {% endif %}
     </div>
+    </div>
+    <!-- add footer -->
+     <footer>
+        <div class="flex flex-col items-center justify-center mt-10">
+            <p class="text-gray-500 text-sm">© 2025 GEZMEDIA. All rights reserved.</p>
+            <p class="text-gray-500 text-sm">Designed and developed by GEZMEDIA</p>
+        </div>
+     </footer>
+
 </section>
 
 
