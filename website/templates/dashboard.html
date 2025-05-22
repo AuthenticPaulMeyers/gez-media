@@ -174,9 +174,9 @@
           <div class="mt-4 mb-4">
             {% if latest_posts %}
             {% for post in latest_posts %}
-            <div class="block p-2 bg-white border border-gray-200 mb-3 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-            <a href="{{ url_for('views.post', post_id=post.id)}}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</a>
-            <p class="text-medium text-gray-400">{{ post.content[:60]}}...</p>
+            <div class="p-2 bg-white border flex flex-col border-gray-200 mb-3 rounded-lg dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-800">
+              <a href="{{ url_for('views.post', post_id=post.id)}}" class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ post.title }}</a>
+              <p class="text-medium text-gray-400">{{ post.content[:60]|safe}}...</p>
               <div class="flex flex-row items-center mt-4">
                 <span class="text-sm text-gray-400 "> {{ post.likes }} <i class="fa-solid fa-thumbs-up"></i></span>
 

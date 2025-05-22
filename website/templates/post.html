@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <!-- include the nav-section here -->
-<section class="bg-gray-100">
+<section class="bg-gray-100 w-full">
     <button class="text-2xl font-medium text-gray-900 ml-8 mt-4 font-medium"><a href="{{ url_for('views.blog') }}"><i class="fa-solid fa-arrow-left"></i></a></button>
     <div class="flex flex-col justify-center align-center items-center">
         <div class="py-8 mx-auto max-w-screen-xl lg:py-16 px-4 sm:px-6 lg:px-8">
@@ -10,7 +10,7 @@
                     
                     {{ post.title }}
                 </h2>
-                    
+                    <!-- post category -->
                 <div class="flex flex-row items-center align-center px-2 sm:px-6 lg:px-8 text-gray-700 ">
                     <span><i class="fa-solid fa-tag"></i></span>
                     <span class="mx-3">{{ post.category.name }}</span> 
@@ -21,7 +21,7 @@
                     <!-- get the name and image of the user from the post -->
                     <div class="flex align-center mt-8 flex-row ">
                         {% if user.image_filename %}
-                            <img src="{{ url_for('auth.profile_picture', user_id=user.id)}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block">
+                            <img src="{{ url_for('auth.profile_picture', user_id=user.id)}}" alt="{{ user.image_filename }}" class="rounded-full w-8 h-8 inline-block">
                         {% else %}
                             <img src="{{ url_for('static', filename='images/user.png')}}" alt="user profile picture" class="rounded-full w-8 h-8 inline-block">
                         {% endif %}
@@ -47,7 +47,7 @@
                 <div class="mx-auto max-w-screen-xl px-2 sm:px-6 lg:px-8">
                     <div class="flex flex-col items-center">
                         <div class="max-w-screen-md text-gray-900 sm:text-lg ">
-                            <pre class="mb-4 font-medium whitespace-pre-wrap break-words">{{ post.content }}</pre>
+                            <pre class="mb-4 font-medium whitespace-pre-wrap break-words">{{ post.content|safe}}</pre>
                         </div>
                     </div>
                 </div>

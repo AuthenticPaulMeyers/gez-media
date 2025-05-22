@@ -58,7 +58,6 @@ def blog():
 @views.route('/post/<int:post_id>')
 def post(post_id):
     post = Post.query.filter_by(id=post_id).first()
-
     # get similar posts
     similar_posts = Post.query.filter(Post.category_id == post.category_id, Post.id != post.id).order_by(func.random()).limit(2).all() if post else []
 
@@ -86,10 +85,10 @@ def create_post():
     category = Category.query.all()
     form.category.choices = [(c.id, c.name) for c in category]
 
-    if form.validate_on_submit():
+    if form.validate_on_submit() or request.method == 'POST':
         image = form.image.data
         title = form.title.data
-        content = form.content.data
+        content = request.form['content']
         category_id = form.category.data
 
         if image:
@@ -101,7 +100,7 @@ def create_post():
             db.session.add(post)
             db.session.commit()
             flash('Your post has been created!', category='success')
-            return redirect(url_for('views.dashboard'))
+            return redirect(url_for('views.posts'))
     return render_template('create_post.html', title='Create Post', form=form, user=current_user)
 
 # create a route for the edit post page
@@ -113,7 +112,7 @@ def edit_post(post_id):
         flash('Post not found!', category='error')
         return redirect(url_for('views.dashboard'))
     
-    form = PostForm(obj=post)
+    form = PostForm()
     category = Category.query.all()
     form.category.choices = [(c.id, c.name) for c in category]
 
@@ -123,6 +122,10 @@ def edit_post(post_id):
         db.session.commit()
         flash('Your post has been updated!', category='success')
         return redirect(url_for('views.dashboard', post_id=post.id))
+    else:
+        form.title.data = post.title
+        form.content.value = post.content
+        form.category.data = post.category_id
     return render_template('edit_post.html', title='Edit Post', form=form, post=post, user=current_user)
 
 # create a route for the delete post page
