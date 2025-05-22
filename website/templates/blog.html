@@ -25,7 +25,7 @@
                 <a href="{{ url_for('views.post', post_id=post.id) }}">
                     <h3 class="text-lg font-bold text-gray-900 mb-3" style="line-height: 1;">{{ post.title }}</h3>
                 </a>
-                <p class="text-gray-500 mb-3">{{ post.content[:40] }}...</p>
+                <p class="text-gray-500 mb-3">{{ post.content[:40]|safe}}...</p>
             <div class="mt-6 flex flex-row items-center align-center">
             <!-- get the name and image of the user from the post -->
                 <div>

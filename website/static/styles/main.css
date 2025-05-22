@@ -506,7 +506,10 @@
     color: var(--white);
 
 }
-
+.blog-card .image-container img{
+    width: 100%;
+    height: auto
+}
 .blog-title{
     position: absolute;
     bottom: 10px;
