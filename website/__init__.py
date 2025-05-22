@@ -45,10 +45,9 @@ def create_app():
     app.register_blueprint(views)
     app.register_blueprint(auth)
 
-
-
-
-
+    # Create the database tables
+    with app.app_context():
+        db.create_all()
 
 
     return app
