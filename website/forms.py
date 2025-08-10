@@ -1,5 +1,4 @@
 
-
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, FileField, TextAreaField , SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
@@ -26,7 +25,6 @@ class UpdateAccountForm(FlaskForm):
     confirm_password = PasswordField('Confirm Password', validators=[EqualTo('password')], render_kw={"placeholder": "Confirm updated password"})
     submit = SubmitField('Save changes')
 
-
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter title"})
     content = TextAreaField('Content', validators=[DataRequired()], render_kw={"placeholder": "Paste your content here"})
@@ -37,7 +35,6 @@ class PostForm(FlaskForm):
 class CategoryForm(FlaskForm):
     name = StringField('New Category', validators=[DataRequired(), Length(min=1, max=150)], render_kw={"placeholder": "Enter category name"})
     submit = SubmitField('Create Category')
-
 
 class PasswordResetForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()], render_kw={"placeholder": "Enter your email"})

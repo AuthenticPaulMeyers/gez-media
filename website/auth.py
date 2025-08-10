@@ -5,7 +5,6 @@ from website import db
 from website.models import User
 from website.forms import RegistrationForm, LoginForm, UpdateAccountForm, PasswordResetForm
 from io import BytesIO
-from flask import current_app as app
 from werkzeug.utils import secure_filename
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')

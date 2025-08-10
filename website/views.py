@@ -1,8 +1,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint, send_file, session
-from flask_login import login_user, current_user, logout_user, login_required
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import current_user, login_required
 from website import db
-from website.models import Post, User, Category
+from website.models import Post, Category
 from website.forms import PostForm, CategoryForm
 from werkzeug.utils import secure_filename
 from io import BytesIO
@@ -132,11 +131,15 @@ def edit_post(post_id):
 @views.route('/delete_post/<int:post_id>', methods=['POST', 'GET'])
 @login_required
 def delete_post(post_id):
-    post = Post.query.filter_by(id=post_id, user_id=current_user.id).first()
 
-    db.session.delete(post)
-    db.session.commit()
-    flash('Your post has been deleted!', category='success')
+    if post:
+        post = Post.query.filter_by(id=post_id, user_id=current_user.id).first()
+
+        db.session.delete(post)
+        db.session.commit()
+        flash('Your post has been deleted!', category='success')
+        return redirect(url_for('views.dashboard'))
+    flash('Post not found!', category='error')
     return redirect(url_for('views.dashboard'))
 
 # route to read images from the database
